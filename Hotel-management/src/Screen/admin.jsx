@@ -424,7 +424,7 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/${activeTab}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/${activeTab}`);
       if (response.data && Array.isArray(response.data)) {
         switch (activeTab) {
           case "users":
@@ -526,7 +526,7 @@ export default function AdminDashboard() {
       }
 
       const response = await axios.post(
-        `http://localhost:3001/${activeTab}`,
+        `${process.env.REACT_APP_API_BASE_URL}/${activeTab}`,
         itemToSend
       );
 
@@ -625,7 +625,7 @@ export default function AdminDashboard() {
       }
 
       const response = await axios.put(
-        `http://localhost:3001/${activeTab}/${updatedItem._id}`,
+        `${process.env.REACT_APP_API_BASE_URL}/${activeTab}/${updatedItem._id}`,
         updatedItem
       );
 
@@ -736,8 +736,8 @@ export default function AdminDashboard() {
         default:
           break;
       }
-      await axios.delete(`http://localhost:3001/${activeTab}/${item._id}`);
-      fetchData();
+      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/${activeTab}/${item._id}`);
+      fetchData(); 
     } catch (error) {
       console.error("Error deleting item:", error);
     }
