@@ -57,9 +57,9 @@ export default function AccountantDashboard() {
     setIsLoading(true);
     try {
       const [invoicesRes, customersRes, servicesRes] = await Promise.all([
-        axios.get("http://localhost:3001/invoices"),
-        axios.get("http://localhost:3001/customers"),
-        axios.get("http://localhost:3001/services"),
+        axios.get(`${process.env.REACT_APP_API_BASE_URL}/invoices`),
+        axios.get(`${process.env.REACT_APP_API_BASE_URL}/customers`),
+        axios.get(`${process.env.REACT_APP_API_BASE_URL}/services`),
       ]);
       setInvoices(invoicesRes.data);
       setCustomers(customersRes.data);
