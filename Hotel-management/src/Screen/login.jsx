@@ -3,7 +3,6 @@ import { Moon, Sun, User, Lock, Star, Loader2, ChevronDown, ChevronUp, Eye, EyeO
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import React from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import CryptoJS from 'crypto-js';
 
@@ -20,6 +19,25 @@ export default function Component() {
   const [hasPasswordInput, setHasPasswordInput] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm();
 
+   // Hardcoded credentials
+   const validCredentials = {
+    admin: {
+      username: 'admin',
+      password: 'admin123',
+      redirect: '/Screen/admin'
+    },
+    receptionist: {
+      username: 'azka',
+      password: 'azka123',
+      redirect: '/Screen/receptionist'
+    },
+    accountant: {
+      username: 'maryam',
+      password: 'maryam456',
+      redirect: '/Screen/accountant'
+    }
+  };
+
   const onSubmit = async (data) => {
     setIsLoading(true);
     setLoginError('');
@@ -35,14 +53,22 @@ export default function Component() {
 
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      if (data.role === 'admin' && data.username === 'admin' && data.password === 'admin123') {
-        navigate('/Screen/admin');
-      } else if (data.role === 'receptionist' && data.username === 'azka' && data.password === 'azka123') {
-        navigate('/Screen/receptionist');
-      } else if (data.role === 'accountant' && data.username === 'maryam' && data.password === 'maryam456') {
-        navigate('/Screen/accountant');
+      // Check credentials against hardcoded values
+      const roleCredentials = validCredentials[data.role];
+      if (!roleCredentials) {
+        throw new Error('Invalid role selected');
+      }
+
+      if (data.username === roleCredentials.username && 
+          data.password === roleCredentials.password) {
+        // Store login state in localStorage
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('userRole', data.role);
+        
+        // Navigate to the appropriate dashboard
+        navigate(roleCredentials.redirect);
       } else {
-        if (data.username !== 'admin' && data.username !== 'azka' && data.username !== 'maryam') {
+        if (data.username !== roleCredentials.username) {
           throw new Error('Invalid username');
         } else {
           throw new Error('Invalid password');
@@ -53,7 +79,9 @@ export default function Component() {
       setLoginError(
         error.message.includes('username') 
           ? "Invalid username. Please try again." 
-          : "Invalid password. Please try again."
+          : error.message.includes('password')
+          ? "Invalid password. Please try again."
+          : error.message
       );
     } finally {
       setIsLoading(false);
