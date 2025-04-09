@@ -1,0 +1,15 @@
+{
+    "builds": [
+      {
+        "src": "cosmicstay-backend/index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "cosmicstay-backend/index.js"
+      }
+    ]
+  }
+  
