@@ -32,6 +32,13 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
+app.get('/',(req,res)=>{
+  res.send({
+    acitveStatus:true,
+    error:false,
+  })
+})
+
 // Start server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
