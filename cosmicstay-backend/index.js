@@ -7,8 +7,10 @@ require('dotenv').config();
 
 // Middleware
 app.use(cors({
-  origin: ["https://cosmicstay.netlify.app/"]
+  origin: ["https://cosmicstay.netlify.app"],
+  credentials: true
 }));
+
 app.use(express.json());
 
 // Database connection - Using environment variable

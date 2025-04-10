@@ -232,8 +232,8 @@ export default function AccountantDashboard() {
       const { _id, ...invoiceData } = updatedInvoice;
 
       const endpoint = currentInvoice._id
-        ? `http://localhost:3001/invoices/${currentInvoice._id}`
-        : "http://localhost:3001/invoices";
+  ? `${process.env.REACT_APP_API_BASE_URL}/invoices/${currentInvoice._id}`
+  : `${process.env.REACT_APP_API_BASE_URL}/invoices`;
 
       const method = currentInvoice._id ? "put" : "post";
 
