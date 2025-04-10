@@ -7,7 +7,7 @@ require('dotenv').config();
 
 // Middleware
 app.use(cors({
-  origin: ["https://cosmicstay.netlify.app", 'http://localhost:3001'], // Removed extra comma
+  origin: ["https://cosmicstay.netlify.app/", 'http://localhost:3001'], // Removed extra comma
   credentials: true
 }));
 

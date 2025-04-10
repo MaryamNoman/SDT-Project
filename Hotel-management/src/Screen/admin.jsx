@@ -422,61 +422,43 @@ export default function AdminDashboard() {
     { icon: ClipboardList, label: "Invoices", value: "invoices" },
   ];
 
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/${activeTab}`);
-  //     if (response.data && Array.isArray(response.data)) {
-  //       switch (activeTab) {
-  //         case "users":
-  //           setUsers(
-  //             response.data.map((user) => ({
-  //               _id: user._id,
-  //               userID: user.userID,
-  //               name: user.name,
-  //               email: user.email,
-  //               role: user.role,
-  //             }))
-  //           );
-  //           break;
-  //         case "rooms":
-  //           setRooms(response.data);
-  //           break;
-  //         case "customers":
-  //           setCustomers(response.data);
-  //           break;
-  //         case "reservations":
-  //           setReservations(response.data);
-  //           break;
-  //         case "services":
-  //           setServices(response.data);
-  //           break;
-  //         case "invoices":
-  //           setInvoices(response.data);
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
-
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/${activeTab}`, {
-        headers: {
-          'Content-Type': 'application/json'
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/${activeTab}`);
+      if (response.data && Array.isArray(response.data)) {
+        switch (activeTab) {
+          case "users":
+            setUsers(
+              response.data.map((user) => ({
+                _id: user._id,
+                userID: user.userID,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+              }))
+            );
+            break;
+          case "rooms":
+            setRooms(response.data);
+            break;
+          case "customers":
+            setCustomers(response.data);
+            break;
+          case "reservations":
+            setReservations(response.data);
+            break;
+          case "services":
+            setServices(response.data);
+            break;
+          case "invoices":
+            setInvoices(response.data);
+            break;
+          default:
+            break;
         }
-      });
-      
-      if (response.status === 200 && response.data) {
-        // Handle your data
       }
     } catch (error) {
       console.error("Error fetching data:", error);
-      console.log("Full error object:", error.response);
-      alert(`Failed to fetch ${activeTab}: ${error.message}`);
     }
   };
 
